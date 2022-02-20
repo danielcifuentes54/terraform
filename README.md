@@ -85,11 +85,6 @@
 > }
 >```
 
-> We can set an explicit dependency on the resource
-> ```
-> depends_on = [<PROVIDER_RESOURCE-TYPE>.<RESOURCE-NAME>, ...]
-> ```
-
 ## Variables
 > ``` 
 > variable <VARIABLE-NAME> {
@@ -135,6 +130,8 @@
 
 ## Output Variables
 
+- This option allows us to get information about our infrastructure after the apply command
+
 > ``` 
 > output <OUTPUT-VARIABLE-NAME> {
 >   value = <PROVIDER_RESOURCE-TYPE>.<RESOURCE-NAME>.<ATTRIBUTE-NAME>
@@ -147,12 +144,43 @@
 > }
 >```
 
+## Terraform Data Sources 
 
-## Terraform LifeCycle Rules
+- Allow us to use the information defined outside of Terraform
+- Only Reads infrastructure
 
-- create_before_destroy
-- prevent_destroy
-- ignore_changes
+> ``` 
+> data <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
+>   ...
+> }
+>```
+
+> ``` 
+> data "local_file" "my-file-created-outside-terraform" {
+>   filename = "/tmp/my-file-created-outside-terraform"
+> }
+>```
+
+## Terraform Meta-Arguments
+
+- Meta-Arguments can be used within any resource block to change the behavior of resources
+
+1. ### Terraform Depends-On
+
+- We can set an explicit dependency on the resource
+> resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
+>   ...
+>   depends_on = [<PROVIDER_RESOURCE-TYPE>.<RESOURCE-NAME>, ...]
+>   ...
+> }
+>```
+
+2. ### Terraform LifeCycle Rules
+
+- Define how the resource should be created, lifecycle uses the following arguments:
+    - create_before_destroy
+    - prevent_destroy
+    - ignore_changes
 > ``` 
 > resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
 >   ...
@@ -163,14 +191,55 @@
 > }
 >```
 
+3. ### Terraform Count
 
-## Terraform Data Sources 
-
-- Allow us to use the information defined outside of Terraform
-- Only Reads infrastructure
-
+- This Meta-Argument allows us to create many instances of our resource depending on the number specified.
+- Creates the resources as a list
 > ``` 
-> data <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
+> resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
 >   ...
+>   count = 2
+>   ...
+> }
+>```
+
+4. ### Terraform for-each
+
+- This Meta-Argument allows us to create many instances of our resource depending of a set or map specified
+-  We can access for-each current value with the keyword `each.value`
+- Creates the resources as a map
+> ``` 
+> resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
+>   ...
+>   for_each = var.<VARIABLE_NAME>
+>   ...
+> }
+>```
+
+## Terraform Version Constraints
+
+- We can specified the provider version that we need for our configurations.
+
+- This constrain accept other options like: `!=, >, <, ~>, ~<, >=, <=`
+
+> ```
+> terraform {
+>   required_providers {
+>      <PROVIDER_NAME> = {
+>        source = <PROVIDER_SOURCE>
+>        version = <PROVIDER_VERSION>
+>      }
+>    }
+> }
+>```
+
+> ```
+> terraform {
+>   required_providers {
+>      local = {
+>        source = "hashicorp/local"
+>        version = "2.0.0"
+>      }
+>    }
 > }
 >```
