@@ -168,6 +168,7 @@
 1. ### Terraform Depends-On
 
 - We can set an explicit dependency on the resource
+>```
 > resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
 >   ...
 >   depends_on = [<PROVIDER_RESOURCE-TYPE>.<RESOURCE-NAME>, ...]
