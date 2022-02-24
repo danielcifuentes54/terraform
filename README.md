@@ -23,17 +23,6 @@
 3. `Plan command`
 4. `Apply command`
 
-## Terraform State Benefits
-
-- Tracking Metadata
-- Performance
-- Collaboration
-
-## Terraform State Considerations
-
-- Sensitive Data
-- The state files should be stored in remote state backends
-
 ## Commands
 
 > ### terraform init
@@ -244,3 +233,65 @@
 >    }
 > }
 >```
+
+## Remote Backend With S3
+
+- Allows us to save the state file in S3 and also to have state locking with DynamoDB.
+- The DynamoDB table is optional and should have a primary key with the name lockID.
+
+> ```
+> terraform {
+>   backend "s3" {
+>     bucket = <BUCKET_NAME>
+>     key = <S3_OBJECT_PATH>
+>     region = <AWS_REGION>
+>     dynamodb_table = <DYNAMO_TABLE>
+>   }
+> }
+>```
+
+> ```
+> terraform {
+>   backend "s3" {
+>     bucket = "my-bucket"
+>     key = "test/terraform.state"
+>     region = "us-west-1"
+>     dynamodb_table = "state-locking"
+>   }
+> }
+>```
+
+## Terraform State Benefits
+
+- Tracking Metadata
+- Performance
+- Collaboration
+- State Locking
+
+## Terraform State Considerations
+
+- Sensitive Data
+- The state files should be stored in remote state backends
+
+## Terraform State Sub-commands `terraform state <SUB-COMMAND> <OPTIONS>`
+
+> ### terraform state list
+> List all the resources in the state
+
+> ### terraform state mv
+> Move an item in the state.
+
+> ### terraform state pull
+Pull current state and output to stdout
+
+> ### terraform state push
+Update remote state from a local state file
+
+> ### terraform state replace-provider
+Replace provider in the state
+
+> ### terraform state rm <RESOURCE_ADDRESS>
+Remove instances from the state
+
+> ### terraform state show
+Show a resource in the state
