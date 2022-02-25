@@ -278,7 +278,7 @@
 > ### terraform state list
 > List all the resources in the state
 
-> ### terraform state mv
+> ### terraform state mv <RESOURCE_ADDRESS> <NEW_RESOURCE_ADDRESS>
 > Move an item in the state.
 
 > ### terraform state pull
@@ -287,11 +287,51 @@ Pull current state and output to stdout
 > ### terraform state push
 Update remote state from a local state file
 
-> ### terraform state replace-provider
+> ### terraform state replace-provider <CURRENT_PROVIDER> <NEW_CURRENT_PROVIDER>
 Replace provider in the state
 
 > ### terraform state rm <RESOURCE_ADDRESS>
 Remove instances from the state
 
-> ### terraform state show
+> ### terraform state show <RESOURCE_ADDRESS>
 Show a resource in the state
+
+## Terraform Provisioners
+- They are used inside the terraform resources
+- Terraform provisioners can help us to specified actions in order to prepare our infrastructure or get some information from that one, there are 3 kinds of provisioners
+1. file
+2. local-exec
+3. remote-exec
+
+> ```
+>  # Copies the myapp.conf file to /etc/myapp.conf
+>  provisioner "file" {
+>    source      = "conf/myapp.conf"
+>    destination = "/etc/myapp.conf"
+>  }
+> ```
+
+> ```
+> #copies the private ip in the private_ips.txt
+> provisioner "local-exec" {
+>    command = "echo ${self.private_ip} >> private_ips.txt"
+>  }
+>```
+
+> ```
+>  # Establishes connection to be used by all
+>  # generic remote provisioners (i.e. file/remote-exec)
+>  connection {
+>    type     = "ssh"
+>    user     = "root"
+>    password = var.root_password
+>    host     = self.public_ip
+>  }
+>
+>  provisioner "remote-exec" {
+>    inline = [
+>      "puppet apply",
+>      "consul join ${aws_instance.web.private_ip}",
+>    ]
+>  }
+>```
