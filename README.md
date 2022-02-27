@@ -25,40 +25,43 @@
 
 ## Commands
 
-> ### terraform init
+> ### `terraform init`
 > Check the configuration file and download and install the necessary plugins for our configuration file.
 
-> ### terraform validate
+> ### `terraform validate`
 > Check the configurations files.
 
-> ### terraform plan
+> ### `terraform plan`
 > show the actions that will be performed by terraform to create the resource.
 
-> ### terraform apply
+> ### `terraform apply`
 > show the execution plan, after we confirm, terraform will proceed with the creation of the resource
 
-> ### terraform show
+> ### `terraform show`
 > show the details of the resource that was created
 
-> ### terraform destroy
+> ### `terraform destroy`
 > show the execution plan with all the resources that will be destroyed, after we confirm, all the resources will be destroyed.
 
-> ### terraform output
+> ### `terraform output`
 > show the output variables that will be created after the terraform apply
 
-> ### terraform fmt
+> ### `terraform fmt`
 > Apply a format in the configuration files
 
-> ### terraform providers
+> ### `terraform providers`
 > List all the providers used in the configuration directory
-> ### terraform providers mirror <PATH>
+> ### `terraform providers mirror <PATH>`
 > Copy the providers plugins to another directory
 
-> ### terraform refresh
+> ### `terraform refresh`
 > sync terraform with the real state of the infrastructure (this command is executed automatically when either plan or apply command is executed)
 
-> ### terraform graph
+> ### `terraform graph`
 > visual representation of the dependencies (We can use a tool like graphviz with the output of this command).
+
+> ### `terraform import <RESOURCE_TYPE>.<RESOURCE_NAME>`
+> allows us take resources you have created by some other means and bring it under Terraform management.
 
 ## Resources
 > ``` 
@@ -275,25 +278,25 @@
 
 ## Terraform State Sub-commands `terraform state <SUB-COMMAND> <OPTIONS>`
 
-> ### terraform state list
+> ### `terraform state list`
 > List all the resources in the state
 
-> ### terraform state mv <RESOURCE_ADDRESS> <NEW_RESOURCE_ADDRESS>
+> ### `terraform state mv <RESOURCE_ADDRESS> <NEW_RESOURCE_ADDRESS>`
 > Move an item in the state.
 
-> ### terraform state pull
+> ### `terraform state pull`
 Pull current state and output to stdout
 
-> ### terraform state push
+> ### `terraform state push`
 Update remote state from a local state file
 
-> ### terraform state replace-provider <CURRENT_PROVIDER> <NEW_CURRENT_PROVIDER>
+> ### `terraform state replace-provider <CURRENT_PROVIDER> `<NEW_CURRENT_PROVIDER>
 Replace provider in the state
 
-> ### terraform state rm <RESOURCE_ADDRESS>
+> ### `terraform state rm <RESOURCE_ADDRESS>`
 Remove instances from the state
 
-> ### terraform state show <RESOURCE_ADDRESS>
+> ### `terraform state show <RESOURCE_ADDRESS>`
 Show a resource in the state
 
 ## Terraform Provisioners
@@ -335,3 +338,40 @@ Show a resource in the state
 >    ]
 >  }
 >```
+
+## Terraform Debugging
+
+- Terraform provide the following environment variables for debugging
+
+1. `TF_LOG_PATH` --> Exports the logs to specific path
+2. `TF_LOG` --> Indicates the Log Level
+
+## Terraform Taint
+
+- Warning: This command is deprecated. For Terraform v0.15.2 and later
+
+> ###  `terraform taint <RESOURCE_ADDRESS>`
+> The resource is marked in order to be replaced
+
+> ###  `terraform untaint <RESOURCE_ADDRESS>`
+> The resource is marked in order to don't be replaced
+
+## Terraform Modules
+- Allows us created multiple resources already defined
+- There are 2 kinds of modules local and remote.
+
+> ```
+>  # Local module
+>  module "<MODULE_NAME>" {
+>    source = <MODULE_LOCAL_PATH>
+>  }
+> ```
+
+> ```
+>  # Remote module
+>  module "<MODULE_NAME>" {
+>    source  = <MODULE_REMOTE_PATH>
+>    # optional but it's recommended
+>    version = <MODULE_REMOTE_VERSION>
+>  }
+> ```
