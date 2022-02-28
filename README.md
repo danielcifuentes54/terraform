@@ -375,3 +375,82 @@ Show a resource in the state
 >    version = <MODULE_REMOTE_VERSION>
 >  }
 > ```
+
+## Terraform Functions
+
+- Terraform provide an interactive console that can be used to test the functions `terraform console`
+
+> ### `file(<FILE_PATH>)`
+> Read data from the specified file.
+
+> ### `length(<LIST_OR_MAP>)`
+> Get the number of elements in a list or a map.
+
+> ### `toset(<LIST>)`
+> Convert list into a set.
+
+> ### `max(<NUMBER_SET>)`
+> Return the greatest number.
+
+> ### `min(<NUMBER_SET>)`
+> Return the smallest number.
+
+> ### `ceil(<NUMBER>)`
+> Round to the closest whole number that is greater than or equal to the argument.
+
+> ### `floor(<NUMBER>)`
+> Round to the closest whole number that is lesser than or equal to the argument.
+
+> ### `split(<SEPARATOR>, <STRING>)`
+> Transform a string to a list of elements.
+
+> ### `lower(<STRING>)`
+> Conver the string to upper case.
+
+> ### `upper(<STRING>)`
+> Conver the string to lower case.
+
+> ### `index(<LIST>, <VALUE_TO_FIND>)`
+> Find the location of the element in a list.
+
+> ### `contains(<LIST>, <VALUE_TO_FIND>)`
+> Return true if the value is present in the list in another case return false.
+
+> ### `keys(<MAP>)`
+> Return the keys from the specified map.
+
+> ### `values(<MAP>)`
+> Return the values from the specified map.
+
+> ### `lookup(<MAP>, <KEY>, <OPTIONAL_VALUE>)`
+> Return the value from the specified map according to key, if the key doesn't exist it will return the optional value.
+
+## Terraform Operators
+
+ - Numeric operators: `+, -, *, /`
+ - Equality operators: `==, !+, <, >, <=, >=`
+ - Logical operators: `&&, ||, !`
+ - Conditional expression: `?`
+
+## Terraform Workspaces
+
+- Allows us to use the same configuration directory to create multiple infrastructure environments
+
+> ### `terraform worksapace new <WORKSPACE_NAME>`
+> creates a new workspace
+
+> ### `terraform worksapace list`
+> lists all the workspaces
+
+> ### `terraform worksapace select <WORKSPACE_NAME>`
+> changes the current workspace to the workspace specified
+
+> ### `terraform.worksapace`
+> returns the current workspace
+> ``` 
+> resource <PROVIDER_RESOURCE-TYPE> <RESOURCE-NAME>{
+>   ...
+>     some_property = terraform.worksapace
+>   ...
+> }
+>```
