@@ -1,0 +1,10 @@
+resource "aws_key_pair" "alpha" {
+  key_name = "alpha"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJW6C9ljqywsg6hsXkRz264F8Q60i1TGd/xM/7j82aZndRLBYiUO8zf5J04/3BDw6GJN7q3XyPTp230jCwH1IThkH9VwsxvOsDbYO8rcLTLEqYvNuQ21VzMSR0jJmN2AVzzQgXMELhmTo95eSjTkeLKrxC+DcoLv8oOiixL4UHHmnlFkHPK1A7J2uAn6vj/Oc/SeTqQWWTnM4+noW0ZonbCaHAsSP0mAzMV6KWKuDUVRO+mRzYYKw2koi6zjBULFOrYC8umNHyVgeoayqD2XErfKewCpy3fnKtHRZL0Nwmp/7r0V6uIWPkrd1L3T5Jgrnbq/eimGLfuuNhY8GaLLq5"
+}
+
+resource "aws_key_pair" "beta" {
+  key_name = "alpha"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJW6C9ljqywsg6hsXkRz264F8Q60i1TGd/xM/7j82aZndRLBYiUO8zf5J04/3BDw6GJN7q3XyPTp230jCwH1IThkH9VwsxvOsDbYO8rcLTLEqYvNuQ21VzMSR0jJmN2AVzzQgXMELhmTo95eSjTkeLKrxC+DcoLv8oOiixL4UHHmnlFkHPK1A7J2uAn6vj/Oc/SeTqQWWTnM4+noW0ZonbCaHAsSP0mAzMV6KWKuDUVRO+mRzYYKw2koi6zjBULFOrYC8umNHyVgeoayqD2XErfKewCpy3fnKtHRZL0Nwmp/7r0V6uIWPkrd1L3T5Jgrnbq/eimGLfuuNhY8GaLLq5"
+  provider = aws.central
+}

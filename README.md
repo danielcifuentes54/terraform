@@ -36,9 +36,13 @@
 
 > ### `terraform apply`
 > show the execution plan, after we confirm, terraform will proceed with the creation of the resource
+> ### `terraform apply -target <RESOURCE_TYPE>.<RESOURCE_NAME>`
+> The changes are only applied in the specified resource
 
 > ### `terraform show`
-> show the details of the resource that was created
+> show current state of the infrastructure
+> ### `terraform show -json`
+> show current state of the infrastructure in a JSON format
 
 > ### `terraform destroy`
 > show the execution plan with all the resources that will be destroyed, after we confirm, all the resources will be destroyed.
@@ -53,6 +57,10 @@
 > List all the providers used in the configuration directory
 > ### `terraform providers mirror <PATH>`
 > Copy the providers plugins to another directory
+> ### `terraform providers lock`
+> Write out dependency locks for the configured providers
+> ### `terraform providers schema -json`
+> Show schemas for the providers used in the configuration
 
 > ### `terraform refresh`
 > sync terraform with the real state of the infrastructure (this command is executed automatically when either plan or apply command is executed)
@@ -62,6 +70,9 @@
 
 > ### `terraform import <RESOURCE_TYPE>.<RESOURCE_NAME>`
 > allows us take resources you have created by some other means and bring it under Terraform management.
+
+> ### `terraform version`
+> Show the current Terraform version and all installed plugins.
 
 ## Resources
 > ``` 
@@ -97,6 +108,13 @@
 > ```
 > ```
 > terraform apply -var "filename=/tmp/file.txt"
+> ```
+> We can set the tfvars file
+> ```sh
+> terraform apply -var-file <TFVARS-FILE>
+> ```
+> ``` sh
+> terraform apply -var-file variables.tfvars
 > ```
 > We can set the variables in the environment variables
 > ```sh
@@ -207,6 +225,25 @@
 >   for_each = var.<VARIABLE_NAME>
 >   ...
 > }
+>```
+
+## Terraform Provider Argument
+
+- There are two main reasons to use the providers argument:
+
+1. Using different default provider configurations for a child module.
+2. Configuring a module that requires multiple configurations of the same provider.
+
+>```
+>provider <PROVIDER_NAME> {
+>  <PROVIDER_ARGUMENTS>
+>}
+>```
+
+>```
+>provider "aws" {
+>  region = "us-east-1"
+>}
 >```
 
 ## Terraform Version Constraints
@@ -322,6 +359,15 @@ Show a resource in the state
 >```
 
 > ```
+> #copies the private ip in the private_ips.txt when it is destroyed
+> provisioner "local-exec" {
+>    on_failure = continue
+>    when       = destroy    
+>    command    = "echo ${self.private_ip} destroyed >> private_ips.txt"
+>  }
+>```
+
+> ```
 >  # Establishes connection to be used by all
 >  # generic remote provisioners (i.e. file/remote-exec)
 >  connection {
@@ -431,6 +477,12 @@ Show a resource in the state
  - Equality operators: `==, !+, <, >, <=, >=`
  - Logical operators: `&&, ||, !`
  - Conditional expression: `?`
+
+> ``` 
+> resource "random_password" "password-generator" {
+>   length = var.length < 8 ? 8 : var.length
+> }
+>```
 
 ## Terraform Workspaces
 

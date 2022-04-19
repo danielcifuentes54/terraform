@@ -6,6 +6,7 @@ variable "instance_type" {
   default = "m6g.medium"
 }
 
-variable "key_pair_name" {
-  type = string
+variable "ports" {
+  type = list(number)
+  default = [ 22, 80 ]
 }

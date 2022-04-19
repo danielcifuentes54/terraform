@@ -47,3 +47,7 @@ resource "aws_instance" "terraform_instance" {
   }
   vpc_security_group_ids = [aws_security_group.ssh_access.id]
 }
+
+output "instance_id" {
+  value = aws_instance.terraform_instance.id
+}

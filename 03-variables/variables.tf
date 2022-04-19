@@ -5,7 +5,13 @@ variable "filename" {
 }
 
 variable "content" {
+  type = string
+  description = "The file content"
   default = "I love my pet Dalton"
+  validation {
+    condition = length(var.content) > 5
+    error_message = "The content should have more than 5 characters."
+  }
 }
 
 variable "prefix" {
@@ -43,4 +49,9 @@ variable "pet-tupla" {
 }
 
 variable "filename-from-tfvar"{
+}
+
+variable "test" {
+  default = [10,5,1]
+  type = list(number)
 }
