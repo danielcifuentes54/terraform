@@ -8,3 +8,12 @@ resource "random_pet" "other-pet" {
   prefix = "Mr"
   separator = " "
 }
+
+resource "random_integer" "priority" {
+  min = 10000
+  max = 99999
+}
+
+output "name" {
+  value = random_integer.priority
+}
